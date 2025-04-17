@@ -1,0 +1,91 @@
+---
+title: "The Dark Side of React Custom Hooks: Unnecessary Re-Renders"
+description: "Custom Hooks are powerful, but misusing them can silently wreck your app's performance. In this post, we explore the hidden pitfalls of React custom hooks—particularly how they can lead to unnecessary re-renders. Learn how to identify these issues, structure your hooks smartly, and build flexible, composable components without sacrificing performance."
+publishDate: "2025-04-01"
+tags: ["React", "Hooks", "Design Patterns", "Advanced React Hooks"]
+---
+
+React custom hooks are a fantastic way to reuse logic across your components. They’re clean, modular, and make your code feel more organized. But there’s a sneaky downside:
+
+**State updates in custom hooks can trigger re-renders in your components — even if you’re not using the values they return.**
+
+Let’s break this down with a simple example, explore why it’s a problem, and learn how to fix it in an easy, practical way.
+
+### The Problem: A Custom Hook That Bites Back
+
+Imagine you’re building a React app and you want to track the window’s width. You decide to create a custom hook called `useWindowSize` to handle this. Here’s what it might look like:
+
+```javascript
+const useWindowSize = () => {  
+  const [width, setWidth] = useState(window.innerWidth);  
+  
+  useEffect(() => {  
+    const handleResize = () => setWidth(window.innerWidth);  
+    window.addEventListener("resize", handleResize);  
+    return () => window.removeEventListener("resize", handleResize);  
+  }, []);  
+  
+  return null; // We’re not even returning the width!  
+};  
+  
+const App = () => {  
+  useWindowSize(); // Just calling the hook  
+  return <p>App Component</p>;  
+};
+```
+
+At first glance, this looks fine. The hook listens for window resize events, updates the width state, and… that’s it. The App component calls `useWindowSize()` but doesn’t use its return value (which is `null` anyway). So, no harm done, right?
+
+Wrong. Here’s the catch: every time you resize the window, the setWidth call updates the state inside useWindowSize. Since App component used the hook, React considers the App dependent on it. **The entire App component re-renders on every resize**, even though it doesn’t care about the width value. That’s a performance hit you didn’t sign up for!
+
+#### Why Does This Happen?
+
+In React, when a hook updates its internal state (like calling `setWidth`), it tells any component using that hook: “Hey, something changed — time to re-render!” This happens regardless of whether the component actually uses the hook’s returned value. It’s just how React’s dependency tracking works. In our example, `App` component re-renders unnecessarily because it’s “tied” to `useWindowSize`, even though it doesn’t need the `width`.
+
+This might not seem like a big deal in a small app, but imagine App is a complex component with lots of child elements. All that re-rendering could slow things down, making your app feel sluggish.
+
+### Issues
+
+-   **Resizing the window triggers a state update** inside `useWindowSize`.
+-   Since `App` **uses** `useWindowSize`It **re-renders every time the window resizes**, even though it **doesn't use the width**.
+
+### The Fix: Swap the Hook for a Component
+
+So, how do we stop this madness? **The simplest solution is to ditch the custom hook and move the logic into a dedicated component instead.** Here’s how:
+
+```javascript
+
+const WindowSizeComponent = () => {  
+  const [width, setWidth] = useState(window.innerWidth);  
+  
+  useEffect(() => {  
+    const handleResize = () => setWidth(window.innerWidth);  
+    window.addEventListener("resize", handleResize);  
+    return () => window.removeEventListener("resize", handleResize);  
+  }, []);  
+  
+  return <p>Window width: {width}</p>;  
+};  
+  
+const App = () => {  
+  return (  
+    <div>  
+      <WindowSizeComponent />  
+    </div>  
+  );  
+};
+```
+Now, the `width` state and the resize logic live inside `WindowSizeComponent`. When the window resizes, only `WindowSizeComponent` re-renders — `App` component stays untouched. This keeps your app performant because React only updates the part of the UI that actually needs to change.
+
+### When to Use Hooks vs. Components
+
+Custom hooks are awesome when you need reusable logic that components _actually use_ — like fetching data or managing form state. But **if the logic involves state updates that don’t need to be shared or consumed elsewhere (like our window resize example), a component might be the better choice.** It’s all about keeping re-renders under control.
+
+### Takeaway
+
+React custom hooks are powerful, but they come with a dark side:
+
+**State updates can trigger re-renders in unexpected places. If your hook’s return value isn’t being used, those updates might still haunt your app’s performance.** Next time you’re tempted to throw state into a custom hook “just because,” pause and ask: _Would a component work better here?_ Your app — and your users — will thank you for it.
+
+Want to support me? Consider buy me coffee ☕💙  
+👉 [buymeacoffee.com/amandeepkochhar](https://buymeacoffee.com/amandeepkochhar)

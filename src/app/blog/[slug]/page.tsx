@@ -2,21 +2,14 @@ import { allBlogs } from ".contentlayer/generated";
 import BlogPost from ".";
 import { appConfig } from "@/appConfig";
 
-export async function generateStaticParams() {
-  return allBlogs
-    .filter((post) =>
-      process.env.NODE_ENV === "production" ? !post.draft : true
-    )
-    .map((post) => ({ slug: post.slug }));
+// Define the type for params
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const searchParams = await params;
-  const post = allBlogs.find((p) => p.slug === searchParams.slug);
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params; // Await the params to get the slug
+  const post = allBlogs.find((p) => p.slug === slug);
   if (!post) return {};
 
   return {
@@ -44,9 +37,9 @@ export async function generateMetadata({
   };
 }
 
-async function BlogPage({ params }: { params: { slug: string } }) {
-  const searchParams = await params;
-  return <BlogPost slug={searchParams.slug} />;
+async function BlogPage({ params }: PageProps) {
+  const { slug } = await params; // Await the params to get the slug
+  return <BlogPost slug={slug} />;
 }
 
 export default BlogPage;

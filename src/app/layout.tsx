@@ -1,6 +1,7 @@
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { appConfig } from "@/appConfig";
+import { Suspense } from "react";
 
 const ibmPlexSans = IBM_Plex_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -49,7 +50,7 @@ export default function RootLayout({
         />
       </head>
       <body className="mx-auto max-w-lg px-6 md:max-w-xl lg:max-w-2xl">
-        {children}
+        <Suspense fallback={null}>{children}</Suspense>
       </body>
     </html>
   );

@@ -4,10 +4,10 @@
   "private": true,
   "homepage": "https://amandeeptherockstar.github.io/portfolio",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node api.js && next dev --turbopack",
     "build:content": "contentlayer2 build",
     "build": "contentlayer2 build && next build",
-    "start": "next start",
+    "start": "node api.js && next start",
     "lint": "next lint",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"

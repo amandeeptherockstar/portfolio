@@ -10,7 +10,6 @@ Some portfolios are so clean and inspiring, you can't resist rebuilding them —
 * Tailwind CSS 4 + Typography plugin
 * Contentlayer2 (with MDX + custom RSS)
 * Iconify, Rehype/Remark plugins for MDX
-* GitHub Pages deployment with gh-pages
 * TypeScript, ESLint, Prettier
 
 ⚡ Result: Fully responsive, performant, clean & extensible.

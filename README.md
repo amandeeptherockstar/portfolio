@@ -1,4 +1,4 @@
-### ✨ My Portfolio**
+### ✨ My Portfolio
 
 Some portfolios are so clean and inspiring, you can't resist rebuilding them — just to experiment, improve, and make them your own.
 

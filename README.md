@@ -1,9 +1,20 @@
-Some portfolios are just *so* clean and well-crafted, you can't help but want to bring them into your own tech stack.
+### ✨ **Universal Social Media Post (Refined with Stack Mention)**
 
-🚀 Just finished porting the stunning [iamsahaj.xyz](https://iamsahaj.xyz) (originally built with Astro) to [my version in Next.js](https://portfolio-two-eta-21.vercel.app) — fully responsive, lightning fast, and framework-ready!
+Some portfolios are so clean and inspiring, you can't resist rebuilding them — just to experiment, improve, and make them your own.
 
-🛠️ Tech Used: Next.js, Tailwind CSS, ShadCN UI
+🔥 I recently ported [**iamsahaj.xyz**](https://iamsahaj.xyz) (originally built with Astro) to [**Next.js**](https://portfolio-two-eta-21.vercel.app), using a modern tech stack I truly enjoy working with:
 
-💡 Inspired by great design. Rebuilt for performance.
+🛠️ **Tech Stack:**
 
+* Next.js 15 + React 19
+* Tailwind CSS 4 + Typography plugin
+* Contentlayer2 (with MDX + custom RSS)
+* Iconify, Rehype/Remark plugins for MDX
+* GitHub Pages deployment with gh-pages
+* TypeScript, ESLint, Prettier
 
+⚡ Result: Fully responsive, performant, clean & extensible.
+
+🎯 Live on GitHub Pages → [amandeeptherockstar.github.io/portfolio](https://amandeeptherockstar.github.io/portfolio)
+
+Would love to hear your thoughts & feedback!
